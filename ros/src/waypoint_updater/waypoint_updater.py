@@ -6,6 +6,7 @@ from styx_msgs.msg import Lane, Waypoint
 from std_msgs.msg import Int32
 from scipy.spatial import KDTree
 import numpy as np
+
 import math
 
 '''
@@ -36,7 +37,6 @@ class WaypointUpdater(object):
         # TODO: Add a subscriber for /traffic_waypoint and /obstacle_waypoint below
 
         rospy.Subscriber('/traffic_waypoint', Int32, self.traffic_cb)
-        # rospy.Subscriber('/obstacle_waypoint', Obstacle, self.obstacle_cb)
 
         self.final_waypoints_pub = rospy.Publisher('final_waypoints', Lane, queue_size=1)
 
@@ -139,7 +139,6 @@ class WaypointUpdater(object):
         if not self.waypoints_2d:
             self.waypoints_2d = [[waypoint.pose.pose.position.x, waypoint.pose.pose.position.y] for waypoint in waypoints.waypoints]
             self.waypoints_tree = KDTree(self.waypoints_2d)
-        pass
 
     def traffic_cb(self, msg):
         # TODO: Callback for /traffic_waypoint message. Implement
